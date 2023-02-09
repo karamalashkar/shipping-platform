@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_address');
             $table->string('customer_phone_number');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
