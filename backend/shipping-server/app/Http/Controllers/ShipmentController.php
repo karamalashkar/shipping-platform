@@ -35,4 +35,14 @@ class ShipmentController extends Controller{
             'status' => 'success'
         ]);
     }
+    
+    function getShipments(Request $request){
+        $userID=$request->id;
+        
+        $response=Shipment::where('user_id',$userID)->get();
+        
+        return response()->json([
+            'data' => $response
+        ]);
+    }
 }
