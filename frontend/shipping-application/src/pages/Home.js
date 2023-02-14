@@ -9,11 +9,17 @@ import AddShipment from "../components/AddShipment";
 import InputFile from "../components/InputFile";
 import Input from "../components/Input";
 import FormButton from "../components/FormButton";
+import { getShipmentById } from "../api/getShipmentById";
 
 const Home=()=>{
     const [isOpenAdd,setOpenAdd]=useState(false)
     const [isOpenEdit,setOpenEdit]=useState('none')
     const [data,setData]=useState('')
+    const [id,setId]=useState('')
+    const [image,setImage]=useState('')
+    const [name,setName]=useState('')
+    const [address,setAddress]=useState('')
+    const [phone,setPhone]=useState('')
     const userID=localStorage.getItem('id');
 
     const shipment = async ()=>{
@@ -24,6 +30,16 @@ const Home=()=>{
     useEffect(()=>{
         shipment()
     },[])
+
+    const getShipmentInfo=async(id)=>{
+        const result=await getShipmentById(id);
+        setId(result.id)
+        setImage(result.waybill)
+        setName(result.customer_name)
+        setAddress(result.customer_address)
+        setPhone(result.customer_phone_number)
+        setOpenEdit('flex')
+    }
 
     return(
         <>
@@ -40,7 +56,8 @@ const Home=()=>{
                                 image={data.waybill}
                                 name={data.customer_name}
                                 address={data.customer_address}
-                                phone={data.customer_phone_number} />
+                                phone={data.customer_phone_number} 
+                                onedit={()=>getShipmentInfo(data.id)} />
                             );
                         })
                     }
@@ -53,13 +70,13 @@ const Home=()=>{
                 <div className="close">
                     <button onClick={()=>setOpenEdit('none')}><AiFillCloseCircle/></button>
                 </div>
-                <img src={'logo.png'} />
+                <img src={image?`http://127.0.0.1:8000/assets/${image}`:'logo.png'} />
                 <p style={{margin: '10px 0', color: 'red'}}></p>
                 <form>
                     <InputFile />
-                    <Input text="Customer Name" />
-                    <Input text="Customer Address" />
-                    <Input text="Customer Phone Number" />
+                    <Input text="Customer Name" default={name} />
+                    <Input text="Customer Address" default={address} />
+                    <Input text="Customer Phone Number" default={phone} />
                     <FormButton text="Save" />
                 </form>
             </div>
