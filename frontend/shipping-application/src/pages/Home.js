@@ -12,8 +12,10 @@ import FormButton from "../components/FormButton";
 import { getShipmentById } from "../api/getShipmentById";
 import { editShipment } from "../api/editShipment";
 import { deleteShipment } from "../api/deleteShipment";
+import { useNavigate } from "react-router-dom";
 
 const Home=()=>{
+    const navigate=useNavigate();
     const [isOpenAdd,setOpenAdd]=useState(false)
     const [isOpenEdit,setOpenEdit]=useState('none')
     const [data,setData]=useState('')
@@ -68,6 +70,11 @@ const Home=()=>{
         shipment()
     }
 
+    const logout=()=>{
+        localStorage.clear();
+        navigate('/')
+    }
+
     const uploadImage = async(e)=>{
         const file=e.target.files[0]
         const base64=await convertBase64(file);
@@ -92,7 +99,7 @@ const Home=()=>{
     return(
         <>
             <div className="home">
-                <Navbar />
+                <Navbar onClick={logout} />
                 <div className="add-section">
                     <Button text="Add Shipment" color={'#34495e'} onClick={()=>setOpenAdd(true)} />
                 </div>
