@@ -11,6 +11,7 @@ import Input from "../components/Input";
 import FormButton from "../components/FormButton";
 import { getShipmentById } from "../api/getShipmentById";
 import { editShipment } from "../api/editShipment";
+import { deleteShipment } from "../api/deleteShipment";
 
 const Home=()=>{
     const [isOpenAdd,setOpenAdd]=useState(false)
@@ -62,6 +63,10 @@ const Home=()=>{
         shipment() 
     }
 
+    const deleteShipmentInfo = async(id)=>{
+        await deleteShipment(id);
+        shipment()
+    }
 
     const uploadImage = async(e)=>{
         const file=e.target.files[0]
@@ -100,6 +105,7 @@ const Home=()=>{
                                 name={data.customer_name}
                                 address={data.customer_address}
                                 phone={data.customer_phone_number} 
+                                ondelete={()=>deleteShipmentInfo(data.id)}
                                 onedit={()=>getShipmentInfo(data.id)} />
                             );
                         })
