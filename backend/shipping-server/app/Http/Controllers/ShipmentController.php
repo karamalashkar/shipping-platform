@@ -45,4 +45,14 @@ class ShipmentController extends Controller{
             'data' => $response
         ]);
     }
+
+    function getShipmentById(Request $request){
+        $id=$request->id;
+        
+        $response=Shipment::where('id',$id)->first();
+        
+        return response()->json([
+            'data' => $response
+        ]);
+    }
 }
