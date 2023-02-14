@@ -86,4 +86,10 @@ class ShipmentController extends Controller{
         $shipment=Shipment::where('id',$id)
         ->update($update);
     }
+
+    function deleteShipment(Request $request){
+        $id=$request->id;
+
+        $shipment=Shipment::find($id)->delete();
+    }
 }
