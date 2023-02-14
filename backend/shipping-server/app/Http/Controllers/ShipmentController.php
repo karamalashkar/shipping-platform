@@ -55,4 +55,35 @@ class ShipmentController extends Controller{
             'data' => $response
         ]);
     }
+
+    function updateShipment(Request $request){
+        $id=$request->id;
+
+        $waybill=$request->waybill;
+        $customerName=$request->customerName;
+        $customerAddress=$request->customerAddress;
+        $customerPhoneNumber=$request->customerPhoneNumber;
+        $userID=$request->userID;
+        
+        $date=date("Y-m-d");
+        $time=date("h-i-s");
+        $shipmentNumber=$userID.$date.$time;
+        
+        $update=['customer_name'=>$customerName,
+        'customer_address'=>$customerAddress,
+        'customer_phone_number'=>$customerPhoneNumber];
+
+        if($waybill){
+            $base64Image = explode(";base64,", $waybill);
+            $explodeImage = explode("image/", $base64Image[0]);
+            $imageType = $explodeImage[1];
+            $image_base64 = base64_decode($base64Image[1]);
+            $imageName = $userID . $shipmentNumber . '.'.'png';
+            \File::put(public_path('assets'). '/' . $imageName, base64_decode($base64Image[1]));
+            $update['waybill']=$imageName;
+        }
+
+        $shipment=Shipment::where('id',$id)
+        ->update($update);
+    }
 }
