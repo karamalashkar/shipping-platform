@@ -7,6 +7,12 @@ a{
     text-decoration: none;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .landing{
     width: 100%;
     height: 100%;
@@ -50,3 +56,27 @@ a{
     color: white;
 }
 
+.form{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+
+.user-form{
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-form img{
+    width: 250px;
+    height: 200px;
+    margin-top: 50px;
+}
+
+.user-form h1{
+    margin: 10px 0;
+}
